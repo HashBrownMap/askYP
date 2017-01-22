@@ -3,11 +3,12 @@
 import os
 import tweepy, time, sys
 from secrets import * 
-
+from nltk.tag import pos_tag
+import string
 from tweepy import Stream
 from tweepy.streaming import StreamListener
-from HTMLParser import HTMLParser
 import json
+
 
 class StreamListener(tweepy.StreamListener):
 	print "yo"
@@ -17,21 +18,29 @@ class StreamListener(tweepy.StreamListener):
 			print "Hello World2"
 			data = {}
 			location = ""
+			exclude = set('!?.,')
 
 			location = status.place
 
-			with open('questions.json', 'a') as f: 
+			#with open('questions.json', 'a') as f: 
 				
-				print status.text
-				print status.id
-				print status.user.screen_name
+			print status.text
+			print status.id
+			print status.user.screen_name
 			time.sleep(5)
+
+			sentence = status.text.replace('#askYP', '')
+			sentence = ''.join(ch for ch in sentence if ch not in exclude)
+			tagged_sent = pos_tag(sentence.split())
+
+			targets = [word for word, pos in tagged_sent if pos == 'NN' or pos == 'NNP']
+
 			#with open('questions.json', 'r') as r:
 			#	json_decode = json.load(r)
 			
-			api.update_status('@%s nice tweet bro' % status.user.screen_name, status.id)
+			api.update_status('@%s you want' % target[0])
 			time.sleep(2)
-			api.update_status('next one yo')
+			#api.update_status('next one yo')
 			return True
 		except BaseException as e:
 			print("Error on_data: %s" % str(e))
