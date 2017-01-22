@@ -18,19 +18,19 @@ class StreamListener(tweepy.StreamListener):
 			data = {}
 			location = ""
 			data[status.id] = []
-			if status.coordinates:
-				location = status.coordinates
-			data[status.id].append({
+
+			location = status.place
+			data[status.d].append({
 				'tweet': status.text,
+				'user': status.user,
 				'location': location
 				})
 			with open('questions.json', 'a') as f: 
-				print status.text
-				if status.coordinates:
-					print "coords:", status.coordinates
-				print "ID:", status.id
 				json.dump(data, f)
-				return True
+			time.sleep(5)
+			#with open('questions.json', 'r') as r:
+			#	json_decode = json.load(r)
+			api.update_status('@%s My status update' % (status.user), status.id)
 		except BaseException as e:
 			print("Error on_data: %s" % str(e))
 		return True
