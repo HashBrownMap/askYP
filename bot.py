@@ -38,7 +38,7 @@ class StreamListener(tweepy.StreamListener):
 			#with open('questions.json', 'r') as r:
 			#	json_decode = json.load(r)
 			
-			api.update_status('@%s you want' % target[0])
+			api.update_status('@%s you want %s' % (status.user.screen_name, targets[0]), status.id)
 			time.sleep(2)
 			#api.update_status('next one yo')
 			return True
