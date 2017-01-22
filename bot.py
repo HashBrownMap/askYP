@@ -81,4 +81,4 @@ if __name__ == '__main__':
 	api = tweepy.API(auth)
 	MyStreamListener = StreamListener()
 	twitter_stream = Stream(auth, MyStreamListener)
-	twitter_stream.filter(track=['#askUUU'])
+	twitter_stream.filter(track=['#askYP'])
