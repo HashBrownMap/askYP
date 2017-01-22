@@ -11,6 +11,7 @@ import json
 import urllib
 
 
+
 class StreamListener(tweepy.StreamListener):
 	print "yo"
 	def on_status(self, status):
@@ -29,8 +30,6 @@ class StreamListener(tweepy.StreamListener):
 			print status.id
 			print status.user.screen_name
 
-			
-
 			time.sleep(5)
 
 			sentence = status.text.replace('#askYP', '')
@@ -38,7 +37,7 @@ class StreamListener(tweepy.StreamListener):
 			tagged_sent = pos_tag(sentence.split())
 
 			targets = [word for word, pos in tagged_sent if pos == 'NN' or pos == 'NNP']
-			
+	
 
 			reponse = []
 			collection = []
